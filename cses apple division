@@ -1,0 +1,48 @@
+//apple division problem 
+
+
+//code
+#include <bits/stdc++.h>
+#include<vector>
+using namespace std;
+#include <algorithm>
+#define ll long long int
+#define st string
+#define all(x) (x).begin(),(x).end()
+#define allr(x) (x).rbegin(),(x).rend()
+#define pii pair<int, int>
+#define arrayIn(x, size) for (int i = 0; i < size; ++i) cin >> x[i];
+#define Test int T; cin >> T; while (T--)
+#define fastIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+
+
+//factorial
+int fact(int x){
+    if(x==0)return 1;
+    else return x * fact(x-1);
+}
+int n;
+ll sum=0;
+vector<int> v;
+ll subsetsSum(int i,ll currsum){
+    if(i==n){
+        ll halfSecond=sum-currsum;
+        return abs(halfSecond-currsum);
+    }
+    return min(subsetsSum(i+1,currsum+v[i]), subsetsSum(i+1,currsum));
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+cin>>n;
+for(int i=0;i<n;i++){
+    int x;cin>>x;
+    v.push_back(x);
+    sum+=x;
+}
+cout<<subsetsSum(0,0);
+
+    return 0;
+
+}
