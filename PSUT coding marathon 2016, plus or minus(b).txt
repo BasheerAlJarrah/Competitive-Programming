@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define all(x) (x).begin(),(x).end()
+#define allr(x) (x).rbegin(),(x).rend()
+#define pii pair<int, int>
+#define rep(i,n) for(int i=0; i<n; i++)
+#define reps(i,m,n) for(int i=m; i<n; i++)
+#define repe(i,m,n) for(int i=m; i<=n; i++)
+#include <ext/pb_ds/assoc_container.hpp> // Common file
+#include <ext/pb_ds/tree_policy.hpp> // Including tree_order_statistics_node_update
+#include <ext/pb_ds/detail/standard_policies.hpp>
+#define WinnersNeverGiveUp  ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+typedef vector<int> vi;
+#define pb push_back
+int n, dp[301][180010];
+const int oo = 1e9;
+vi v;
+string sign;
+int calc(int i, int sum){
+    if(i == n) return (sum == 0? 0 : oo);
+    int &ret = dp[i][sum];
+    if(ret != -1) return ret;
+    ret = calc(i + 1, sum + v[i]);
+    if(i > 0)
+        ret = min(ret,1 + calc(i + 1,sum - v[i]));
+    return ret;
+}
+ 
+void solve() {
+    cin >> n;
+    memset(dp, -1, sizeof(dp));
+    rep(i, 2 * n - 1){
+        int x;
+        if(i == 0){
+            cin >> x;
+            v.pb(x);
+        }
+        else {
+            cin >> sign;
+            cin >> x;
+            if (sign == "-") {
+                v.pb(x * -1);
+            } else v.pb(x);
+        }
+    }
+    v.resize(n);
+    ll ans = calc(0, 0);
+    if (ans == oo) ans = -1;
+    cout << ans;
+//rep(i, n) cout << v[i] << ' ';
+}
+int main() {
+    WinnersNeverGiveUp
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    freopen("error.txt", "w", stderr);
+#endif
+    int t = 1;
+//    cin >> t;
+    while (t--) {
+        solve();
+        cout << '\n';
+    }
+    return 0;
+}
